@@ -7,55 +7,44 @@ using namespace std;
 struct Node {
     int data;
     Node* next;
+    Node(int data) {
+        this->data = data;
+        next = NULL;
+    }
 };
 
-// Class to manage the linked list
-class LinkedList {
-private:
+struct LinkedList {
     Node* head;
-
-public:
-    LinkedList() : head(nullptr) {}
-
-    // Function to push a new node at the end of the linked list
-    void push(int value) {
-        Node* newNode = new Node;
-        newNode->data = value;
-        newNode->next = nullptr;
-        
-        if (head == nullptr) {
-            head = newNode;  // If list is empty, new node is the head
-        } else {
-            Node* temp = head;
-            while (temp->next != nullptr) {
-                temp = temp->next;  // Traverse to the end of the list
-            }
-            temp->next = newNode;  // Link the new node at the end
-        }
+    LinkedList() {
+        head = NULL;
     }
 
-    // Function to display the linked list
-    void displayList() {
+    void reverse() {
+        Node* current = head;
+        Node* prev = NULL;
+        Node* next = NULL;
+        while (current != NULL) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
+
+    void print() {
         Node* temp = head;
-        while (temp != nullptr) {
+        while (temp != NULL) {
             cout << temp->data << " ";
             temp = temp->next;
         }
         cout << endl;
     }
 
-    // Function to display the linked list in reverse order using recursion
-    void displayReverse(Node* node) {
-        if (node == nullptr) {
-            return;
-        }
-        displayReverse(node->next);  // Recursive call to the next node
-        cout << node->data << " ";    // Print data after recursive call
-    }
-
-    // Wrapper function to call reverse display
-    void displayReverse() {
-        displayReverse(head);
+    void push(int data) {
+        Node* temp = new Node(data);
+        temp->next = head;
+        head = temp;
     }
 };
 
@@ -70,13 +59,14 @@ int main() {
 
     // Display the linked list
     cout << "Given linked list:\n";
-    list.displayList();
+    list.print();
 
-    // Display the linked list in reverse order
+    // Reverse and display the linked list
+    list.reverse();
     cout << "Reversed Linked List:\n";
-    list.displayReverse();
-    cout << endl;
+    list.print();
 
     return 0;
 }
+
 
