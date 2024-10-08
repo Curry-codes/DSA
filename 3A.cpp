@@ -4,84 +4,63 @@
 #include <cstdlib>  // For exit()
 using namespace std;
 
-#define MAX 100  // Maximum size of the stack
+#define MAX 5  // Maximum size of the stack
+int top = -1, stack[MAX];
 
-class Stack {
-private:
-    int arr[MAX];  // Array to hold stack elements
-    int top;       // Index of the top element
-
-public:
-    Stack() : top(-1) {}  // Initialize top to -1 (empty stack)
-
-    // Function to push an element onto the stack
-    void push() {
-        int val;
-        if (top == MAX - 1) {
-            cout << "\nStack is full!";
-        } else {
-            cout << "\nEnter element to push: ";
-            cin >> val;
-            arr[++top] = val;  // Increment top and add the value
-            cout << val << " pushed onto stack.";
-        }
-    }
-
-    // Function to pop an element from the stack
-    void pop() {
-        if (top == -1) {
-            cout << "\nStack is empty!";
-        } else {
-            cout << "\nPopped element: " << arr[top--];  // Return the top element and decrement top
-        }
-    }
-
-    // Function to display the elements in the stack
-    void display() {
-        if (top == -1) {
-            cout << "\nStack is empty!";
-        } else {
-            cout << "\nStack elements are: ";
-            for (int i = top; i >= 0; i--) {
-                cout << arr[i] << " ";  // Display elements from top to bottom
-            }
-            cout << endl;
-        }
-    }
-};
+void push();
+void pop();
+void display();
 
 int main() {
-    Stack stack;  // Create a Stack object
-    int choice;
-
-    while (true) {
-        // Menu options
-        cout << "\n\n----- Stack Menu -----";
-        cout << "\n1. Push";
-        cout << "\n2. Pop";
-        cout << "\n3. Display";
-        cout << "\n4. Exit";
+    int ch;
+    while (1) {
+        cout << "\n**** Stack Menu ****";
+        cout << "\n1. Push\n2. Pop\n3. Display\n4. Exit";
         cout << "\nEnter your choice: ";
-        cin >> choice;
+        cin >> ch;
 
-        switch (choice) {
-            case 1:
-                stack.push();
-                break;
-            case 2:
-                stack.pop();
-                break;
-            case 3:
-                stack.display();
-                break;
-            case 4:
-                cout << "\nExiting...\n";
-                exit(0);  // Exit the program
-            default:
-                cout << "\nInvalid choice! Please try again.";
+        switch (ch) {
+            case 1: push();
+                    break;
+            case 2: pop();
+                    break;
+            case 3: display();
+                    break;
+            case 4: exit(0);
+            default: cout << "Wrong choice!!";
         }
     }
-
     return 0;
 }
 
+void push() {
+    int val;
+    if (top == MAX - 1) {
+        cout << "Stack is full\n";
+    } else {
+        cout << "Enter element to push: ";
+        cin >> val;
+        top = top + 1;
+        stack[top] = val;
+    }
+}
+
+void pop() {
+    if (top == -1) {
+        cout << "Stack is empty!!\n";
+    } else {
+        cout << "Deleted element is: " << stack[top] << "\n";
+        top = top - 1;
+    }
+}
+
+void display() {
+    if (top == -1) {
+        cout << "Stack is empty\n";
+    } else {
+        cout << "Stack is:\n";
+        for (int i = top; i >= 0; --i) {
+            cout << stack[i] << "\n";
+        }
+    }
+}
